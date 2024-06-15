@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import httpStatus from 'http-status';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from '../config';
 import AppError from '../error/appError';
@@ -11,7 +12,10 @@ export const auth = (...requiredRoles: (keyof typeof USER_Role)[]) => {
     const accessToken = req.headers.authorization?.split(' ')[1]; // Assuming Bearer token
 
     if (!accessToken) {
-      throw new AppError(401, 'You are not authorized to access this route');
+      throw new AppError(
+        httpStatus.UNAUTHORIZED,
+        'You have no access to this route',
+      );
     }
 
     const verifiedToken = jwt.verify(
@@ -24,11 +28,11 @@ export const auth = (...requiredRoles: (keyof typeof USER_Role)[]) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      throw new AppError(401, 'User not found');
+      throw new AppError(httpStatus.NOT_FOUND, 'User not found');
     }
 
     if (user.status === USER_STATUS.BLOCKED) {
-      throw new AppError(401, 'User is blocked');
+      throw new AppError(httpStatus.UNAUTHORIZED, 'User is blocked');
     }
 
     if (!requiredRoles.includes(role as keyof typeof USER_Role)) {

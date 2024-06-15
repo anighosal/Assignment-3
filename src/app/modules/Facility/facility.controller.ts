@@ -17,15 +17,24 @@ const createFacility = catchAsync(async (req: Request, res: Response) => {
   );
   res.status(201).json({
     success: true,
-    message: 'Facility created successfully',
+    message: 'Facility added successfully',
     data: facility,
   });
 });
 
 const getFacilities = catchAsync(async (req: Request, res: Response) => {
   const facilities = await FacilityService.getFacilitiesFromDB();
+
+  if (!facilities) {
+    return res.status(404).json({
+      success: false,
+      message: 'No data found',
+      data: [],
+    });
+  }
   res.status(200).json({
     success: true,
+    message: 'Facilities retrieved successfully',
     data: facilities,
   });
 });

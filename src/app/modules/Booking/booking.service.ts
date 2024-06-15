@@ -18,8 +18,8 @@ const getBookingsByUser = async (userId: string): Promise<TBooking[]> => {
 };
 
 // only admin see all bookings
-const getBookingsFromDB = async (): Promise<TBooking[]> => {
-  return Booking.find().populate('user').populate('facility');
+const getAllBookingsByAdminFromDB = async (): Promise<TBooking[]> => {
+  return Booking.find().populate('facility').populate('user');
 };
 
 const cancelBookingByUserFromDB = async (
@@ -45,6 +45,6 @@ export const BookingService = {
   getBookingsByDate,
   createBookingIntoDB,
   getBookingsByUser,
-  getBookingsFromDB,
+  getAllBookingsByAdminFromDB,
   cancelBookingByUserFromDB,
 };
