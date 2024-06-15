@@ -1,11 +1,11 @@
 import { Types } from 'mongoose';
 
-export type TBooking = {
-  user: Types.ObjectId;
+export interface TBooking {
+  user: Types.ObjectId; // user is defined as Types.ObjectId
   facility: Types.ObjectId;
   date: Date;
   startTime: string;
   endTime: string;
   payableAmount: number;
   isBooked: 'confirmed' | 'unconfirmed' | 'canceled';
-};
+}

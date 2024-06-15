@@ -13,6 +13,12 @@ const createBookingSchema = z.object({
   }),
 });
 
+export const cancelBookingSchema = z.object({
+  params: z.object({
+    id: z.string(),
+  }),
+});
+
 export const validateBookingCreation = (
   req: Request,
   res: Response,
