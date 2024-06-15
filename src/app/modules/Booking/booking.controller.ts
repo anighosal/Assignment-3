@@ -40,6 +40,18 @@ const createBooking = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getBookingsByUser = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.user._id;
+
+  const bookings = await BookingService.getBookingsByUser(userId);
+
+  res.status(200).json({
+    success: true,
+    message: 'Bookings retrieved successfully',
+    data: bookings,
+  });
+});
+
 const getBookings = catchAsync(async (req: Request, res: Response) => {
   const bookings = await BookingService.getBookingsFromDB();
   res.status(200).json({
@@ -50,5 +62,6 @@ const getBookings = catchAsync(async (req: Request, res: Response) => {
 
 export const BookingController = {
   createBooking,
+  getBookingsByUser,
   getBookings,
 };

@@ -12,11 +12,16 @@ const createBookingIntoDB = async (
   return booking;
 };
 
+const getBookingsByUser = async (userId: string): Promise<TBooking[]> => {
+  return Booking.find({ user: userId }).populate('facility').exec();
+};
+
 const getBookingsFromDB = async (): Promise<TBooking[]> => {
   return Booking.find().populate('user').populate('facility');
 };
 export const BookingService = {
   getBookingsByDate,
   createBookingIntoDB,
+  getBookingsByUser,
   getBookingsFromDB,
 };
