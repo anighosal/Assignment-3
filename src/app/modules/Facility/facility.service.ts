@@ -17,7 +17,20 @@ const getFacilitiesFromDB = async () => {
   );
 };
 
+const updateFacilityIntoDB = async (
+  id: string,
+  updateData: Partial<TFacility>,
+) => {
+  return Facility.findByIdAndUpdate(id, updateData, { new: true });
+};
+
+const deleteFacilityFromDB = async (id: string) => {
+  return Facility.findByIdAndDelete(id);
+};
+
 export const FacilityService = {
   createFacilityIntoDB,
   getFacilitiesFromDB,
+  updateFacilityIntoDB,
+  deleteFacilityFromDB,
 };

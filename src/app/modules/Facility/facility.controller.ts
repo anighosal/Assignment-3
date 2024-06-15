@@ -30,7 +30,48 @@ const getFacilities = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const updateFacility = catchAsync(async (req: Request, res: Response) => {
+  const facilityId = req.params.id;
+  const updateData = req.body;
+
+  const updatedFacility = await FacilityService.updateFacilityIntoDB(
+    facilityId,
+    updateData,
+  );
+  if (!updatedFacility) {
+    return res
+      .status(404)
+      .json({ success: false, message: 'Facility not found' });
+  }
+
+  res.status(200).json({
+    success: true,
+    message: 'Facility updated successfully',
+    data: updatedFacility,
+  });
+});
+
+const deleteFacility = catchAsync(async (req: Request, res: Response) => {
+  const facilityId = req.params.id;
+
+  const deletedFacility =
+    await FacilityService.deleteFacilityFromDB(facilityId);
+  if (!deletedFacility) {
+    return res
+      .status(404)
+      .json({ success: false, message: 'Facility not found' });
+  }
+
+  res.status(200).json({
+    success: true,
+    message: 'Facility deleted successfully',
+    data: deletedFacility,
+  });
+});
+
 export const FacilityController = {
   createFacility,
   getFacilities,
+  updateFacility,
+  deleteFacility,
 };

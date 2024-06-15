@@ -14,4 +14,8 @@ router.post(
 
 router.get('/', FacilityController.getFacilities);
 
+router.put('/:id', auth('ADMIN'), FacilityController.updateFacility);
+
+router.delete('/:id', auth('ADMIN'), FacilityController.deleteFacility);
+
 export const FacilityRoutes = router;

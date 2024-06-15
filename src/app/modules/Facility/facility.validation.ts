@@ -13,6 +13,19 @@ const createFacilitySchema = z.object({
   }),
 });
 
+const updateFacilitySchema = z.object({
+  body: z.object({
+    name: z.string().optional(),
+    description: z.string().optional(),
+    pricePerHour: z
+      .number()
+      .positive('Price per hour must be a positive number')
+      .optional(),
+    location: z.string().optional(),
+    isDeleted: z.boolean().optional(),
+  }),
+});
+
 export const validateFacilityCreation = (
   req: Request,
   res: Response,
@@ -20,6 +33,19 @@ export const validateFacilityCreation = (
 ) => {
   try {
     createFacilitySchema.parse(req);
+    next();
+  } catch (e: any) {
+    return res.status(400).json({ success: false, message: e.errors });
+  }
+};
+
+export const validateFacilityUpdate = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    updateFacilitySchema.parse(req);
     next();
   } catch (e: any) {
     return res.status(400).json({ success: false, message: e.errors });
