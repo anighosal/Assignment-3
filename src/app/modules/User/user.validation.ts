@@ -1,14 +1,31 @@
 import { z } from 'zod';
+import { USER_Role, USER_STATUS } from './user.constant';
 
-const userValidationSchema = z.object({
-  password: z
-    .string({
-      invalid_type_error: 'Password must be string',
-    })
-    .max(20, { message: 'Password can not be more than 20 characters' })
-    .optional(),
+const createAdminValidations = z.object({
+  body: z.object({
+    name: z.string(),
+    role: z.nativeEnum(USER_Role).default(USER_Role.ADMIN),
+    email: z.string().email(),
+    password: z.string(),
+    phone: z.string(),
+    address: z.string(),
+    status: z.nativeEnum(USER_STATUS).default(USER_STATUS.ACTIVE),
+  }),
 });
 
-export const UserValidation = {
-  userValidationSchema,
+const createUserValidations = z.object({
+  body: z.object({
+    name: z.string(),
+    role: z.nativeEnum(USER_Role),
+    email: z.string().email(),
+    password: z.string(),
+    phone: z.string(),
+    address: z.string(),
+    status: z.nativeEnum(USER_STATUS).default(USER_STATUS.ACTIVE),
+  }),
+});
+
+export const UserValidations = {
+  createAdminValidations,
+  createUserValidations,
 };

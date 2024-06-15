@@ -1,8 +1,12 @@
+import { USER_Role, USER_STATUS } from './user.constant';
+
 export type TUser = {
-  id: string;
+  name: string;
+  role: keyof typeof USER_Role;
+  email: string;
   password: string;
-  needsPasswordChange: boolean;
-  role: 'admin' | 'user';
-  status: 'in-progress' | 'blocked';
-  isDeleted: boolean;
+  phone: string;
+  address: string;
+  passwordChangedAt?: Date;
+  status: keyof typeof USER_STATUS;
 };
