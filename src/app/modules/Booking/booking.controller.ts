@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { Types } from 'mongoose';
 import catchAsync from '../../utils/catchAsync';
 import { Facility } from '../Facility/facility.model';
@@ -60,7 +60,7 @@ const getBookingsByUser = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAllBookingsFromAdminView = catchAsync(
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     const bookings = await BookingService.getAllBookingsByAdminFromDB();
 
     if (!bookings) {
@@ -78,29 +78,31 @@ const getAllBookingsFromAdminView = catchAsync(
   },
 );
 
-const cancelBookingByUser = catchAsync(async (req: Request, res: Response) => {
-  const bookingId = req.params.id;
-  const userId = req.user._id as Types.ObjectId;
+const cancelBookingByUser = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const bookingId = req.params.id;
+    const userId = req.user._id as Types.ObjectId;
 
-  const canceledBooking = await BookingService.cancelBookingByUserFromDB(
-    new Types.ObjectId(bookingId),
-    userId,
-  );
+    const canceledBooking = await BookingService.cancelBookingByUserFromDB(
+      new Types.ObjectId(bookingId),
+      userId,
+    );
 
-  if (!canceledBooking) {
-    return res.status(404).json({
-      success: false,
-      message:
-        'Booking not found or you are not authorized to cancel this booking',
+    if (!canceledBooking) {
+      return res.status(404).json({
+        success: false,
+        message:
+          'Booking not found or you are not authorized to cancel this booking',
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Booking cancelled successfully',
+      data: canceledBooking,
     });
-  }
-
-  res.status(200).json({
-    success: true,
-    message: 'Booking cancelled successfully',
-    data: canceledBooking,
-  });
-});
+  },
+);
 export const BookingController = {
   createBooking,
   getBookingsByUser,

@@ -1,6 +1,7 @@
 import { Types } from 'mongoose';
 import { TBooking } from './booking.interface';
 import { Booking } from './booking.model';
+import BookingError from './customBookingError';
 
 const getBookingsByDate = async (date: Date): Promise<TBooking[]> => {
   return Booking.find({ date }).populate('facility').populate('user');
@@ -28,11 +29,11 @@ const cancelBookingByUserFromDB = async (
   const booking = await Booking.findById(bookingId).populate('facility');
 
   if (!booking) {
-    return null;
+    throw new BookingError('Booking not found', 404);
   }
 
   if (!booking.user.equals(userId)) {
-    return null;
+    throw new BookingError('Booking not found', 404);
   }
 
   booking.isBooked = 'canceled';
