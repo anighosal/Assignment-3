@@ -17,7 +17,6 @@ const getBookingsByUser = async (userId: string): Promise<TBooking[]> => {
   return Booking.find({ user: userId }).populate('facility').exec();
 };
 
-// only admin see all bookings
 const getAllBookingsByAdminFromDB = async (): Promise<TBooking[]> => {
   return Booking.find().populate('facility').populate('user');
 };

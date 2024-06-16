@@ -1,9 +1,3 @@
-//  /create-admin, superAdmin,admin post
-// /:authid- admin, superadmin put
-// /:authid-  get
-// /me - auth own data. put
-//
-
 import express from 'express';
 import { authControllers } from './auth.controller';
 

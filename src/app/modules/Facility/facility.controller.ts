@@ -3,7 +3,6 @@ import catchAsync from '../../utils/catchAsync';
 import { FacilityService } from './facility.service';
 
 const createFacility = catchAsync(async (req: Request, res: Response) => {
-  console.log('test', req.user);
   const facilityData = req.body;
   const user = req.user;
 

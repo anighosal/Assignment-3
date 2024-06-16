@@ -8,7 +8,6 @@ import { BookingService } from './booking.service';
 const createBooking = catchAsync(async (req: Request, res: Response) => {
   const { facility, date, startTime, endTime } = req.body;
   const userId = req.user._id;
-  console.log(userId);
 
   const facilityData = await Facility.findById(facility);
   if (!facilityData) {

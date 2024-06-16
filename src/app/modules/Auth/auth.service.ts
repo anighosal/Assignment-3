@@ -6,7 +6,7 @@ import User from '../User/user.model';
 import { TLoginUser } from './auth.interface';
 import { isPasswordMatched } from './auth.utils';
 
-const register = async (payload: TUser): Promise<any> => {
+const register = async (payload: TUser): Promise<TUser> => {
   const user = await User.findOne({ email: payload.email });
 
   if (user) {

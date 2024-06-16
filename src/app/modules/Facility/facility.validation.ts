@@ -34,8 +34,12 @@ export const validateFacilityCreation = (
   try {
     createFacilitySchema.parse(req);
     next();
-  } catch (e: any) {
-    return res.status(400).json({ success: false, message: e.errors });
+  } catch (err) {
+    return res.status(400).json({
+      success: false,
+      message: 'something went wrong',
+      error: (err as Error).message,
+    });
   }
 };
 
@@ -47,7 +51,9 @@ export const validateFacilityUpdate = (
   try {
     updateFacilitySchema.parse(req);
     next();
-  } catch (e: any) {
-    return res.status(400).json({ success: false, message: e.errors });
+  } catch (err) {
+    return res
+      .status(400)
+      .json({ success: false, error: (err as Error).message });
   }
 };

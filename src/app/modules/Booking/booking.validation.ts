@@ -27,7 +27,9 @@ export const validateBookingCreation = (
   try {
     createBookingSchema.parse(req);
     next();
-  } catch (e: any) {
-    return res.status(400).json({ success: false, message: e.errors });
+  } catch (e) {
+    return res
+      .status(400)
+      .json({ success: false, error: (e as Error).message });
   }
 };

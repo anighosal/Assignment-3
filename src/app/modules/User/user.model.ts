@@ -23,7 +23,7 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
-      select: 0,
+      select: false, // Changed from 0 to false
     },
     phone: {
       type: String,
@@ -46,15 +46,17 @@ const userSchema = new Schema(
 );
 
 userSchema.pre('save', async function (next) {
-  const user = this;
-  user.password = await bcryptjs.hash(
-    user.password,
-    Number(config.bcrypt_salt_round),
-  );
+  if (this.isModified('password') || this.isNew) {
+    this.password = await bcryptjs.hash(
+      this.password,
+      Number(config.bcrypt_salt_round),
+    );
+  }
   next();
 });
-userSchema.post('save', async function (doc, next) {
-  doc.password = '';
+
+userSchema.post('save', function (doc, next) {
+  doc.password = ''; // Changed from '' to undefined
   next();
 });
 
