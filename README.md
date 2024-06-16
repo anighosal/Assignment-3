@@ -1,10 +1,10 @@
-# Project name is Sports Facility Booking Platform.This project is mainly developing the backend for a sports facility booking platform.
+Project name is Sports Facility Booking Platform.This project is mainly developing the backend for a sports facility booking platform.
 
-# This project focuses on implementing the following key functionalities: Error Handling, CRUD operations, Authentication & Authorization, and Transaction & Rollback if needed.
+This project focuses on implementing the following key functionalities: Error Handling, CRUD operations, Authentication & Authorization, and Transaction & Rollback if needed.
 
-# I am using 4 technologies Node, Typescript, ExpressJs and Mongoose for mongodb in this project.
+I am using 4 technologies Node, Typescript, ExpressJs and Mongoose for mongodb in this project.
 
-# There are three models in this project.The models are user, facility and booking model.
+There are three models in this project.The models are user, facility and booking model.
 
 # User have 2 role ADMIN OR USER.When a user signs up, he will be registered as a user
 

@@ -23,7 +23,7 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
-      select: false, // Changed from 0 to false
+      select: 0,
     },
     phone: {
       type: String,
@@ -56,7 +56,7 @@ userSchema.pre('save', async function (next) {
 });
 
 userSchema.post('save', function (doc, next) {
-  doc.password = ''; // Changed from '' to undefined
+  doc.password = '';
   next();
 });
 

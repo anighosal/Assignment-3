@@ -19,7 +19,7 @@ app.use('/api/bookings', BookingRoutes);
 app.use('/api', AvailabilityRoutes);
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Hello Next!');
+  res.send('Welcome to sports facility booking platform!');
 });
 
 app.use(globalErrorHandler);
